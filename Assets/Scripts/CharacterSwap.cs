@@ -31,8 +31,8 @@ public class CharacterSwap : MonoBehaviour
 
     private void SelectCharacter(int characterIndex){
         if (characterIndex != selectedCharacterIndex){
-            characters[selectedCharacterIndex].isActive = false;
-            characters[characterIndex].isActive = true;
+            characters[selectedCharacterIndex].SetNotActive();
+            characters[characterIndex].SetActive();
             selectedCharacterIndex = characterIndex;
         }
     }

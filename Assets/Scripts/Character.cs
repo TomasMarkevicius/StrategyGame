@@ -9,13 +9,14 @@ public class Character : MonoBehaviour
     private float speed = 20;
 
     private Vector3 targetPosition;
-
     private bool isMoving = false;
-
     public bool isActive = false;
+    public GameObject highlight;
 
     // Start is called before the first frame update
     void Start(){
+        highlight = GameObject.Find(gameObject.name + "/highlight");
+        // highlight.GetComponent<SpriteRenderer>().color = Color.red;
         
     }
 
@@ -50,4 +51,13 @@ public class Character : MonoBehaviour
         isMoving = false;
     }
 
+    public void SetActive(){
+        isActive = true;
+        highlight.GetComponent<SpriteRenderer>().enabled = true;
+    }
+
+    public void SetNotActive(){
+        isActive = false;
+        highlight.GetComponent<SpriteRenderer>().enabled = false;
+    }
 }
