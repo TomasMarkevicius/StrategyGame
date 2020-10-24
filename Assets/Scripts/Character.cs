@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingScript : MonoBehaviour
+public class Character : MonoBehaviour
 {
     [SerializeField]
     [Range(2,12)]
@@ -12,6 +12,8 @@ public class MovingScript : MonoBehaviour
 
     private bool isMoving = false;
 
+    public bool isActive = false;
+
     // Start is called before the first frame update
     void Start(){
         
@@ -19,7 +21,7 @@ public class MovingScript : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        if (Input.GetMouseButton(0)){
+        if (isActive && Input.GetMouseButton(0)){
             SetTargetPosition();
         }
 
