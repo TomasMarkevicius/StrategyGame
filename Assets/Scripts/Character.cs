@@ -12,12 +12,16 @@ public class Character : MonoBehaviour
     private bool isMoving = false;
     public bool isActive = false;
     public GameObject highlight;
+    public int maxHealth = 100;
+    public int currentHealth;
+    public HealthBar healthBar;
 
     // Start is called before the first frame update
     void Start(){
         highlight = GameObject.Find(gameObject.name + "/highlight");
         // highlight.GetComponent<SpriteRenderer>().color = Color.red;
-        
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
@@ -25,9 +29,11 @@ public class Character : MonoBehaviour
         if (isActive && Input.GetMouseButton(0)){
             SetTargetPosition();
         }
-
         if (isMoving){
             Move();
+        }
+        if (isActive && Input.GetKeyDown(KeyCode.Space)){
+            TakeDamage(20);
         }
     }
 
@@ -59,5 +65,10 @@ public class Character : MonoBehaviour
     public void SetNotActive(){
         isActive = false;
         highlight.GetComponent<SpriteRenderer>().enabled = false;
+    }
+
+    void TakeDamage(int damage){
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
     }
 }
