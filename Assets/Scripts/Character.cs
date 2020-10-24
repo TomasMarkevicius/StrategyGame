@@ -15,22 +15,27 @@ public class Character : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public HealthBar healthBar;
+    public Transform pfLaserBeam;
+    private Vector3 projectilePosition;
+    public Transform firePoint;
+    public string facingDirection = "right";
 
     // Start is called before the first frame update
     void Start(){
-        highlight = GameObject.Find(gameObject.name + "/highlight");
-        // highlight.GetComponent<SpriteRenderer>().color = Color.red;
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
     void Update(){
-        if (isActive && Input.GetMouseButton(0)){
+        if (isActive && Input.GetMouseButton(1)){
             SetTargetPosition();
         }
         if (isMoving){
             Move();
+        }
+        if (isActive && Input.GetMouseButtonDown(0)){
+            Shoot();
         }
         if (isActive && Input.GetKeyDown(KeyCode.Space)){
             TakeDamage(20);
@@ -40,6 +45,10 @@ public class Character : MonoBehaviour
     void SetTargetPosition(){
         targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         targetPosition.z = transform.position.z;
+        if ((targetPosition.x > transform.position.x && facingDirection == "left")
+            || (targetPosition.x < transform.position.x && facingDirection == "right")){
+                Flip();
+            }
         
         isMoving = true;
     }
@@ -70,5 +79,20 @@ public class Character : MonoBehaviour
     void TakeDamage(int damage){
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+    }
+
+    void Shoot(){
+        Instantiate(pfLaserBeam, firePoint.position, firePoint.rotation);
+    }
+
+    void Flip(){
+        if (facingDirection == "right"){
+            facingDirection = "left";
+        }
+        else{
+            facingDirection = "right";
+        }
+
+        transform.Rotate(0f, 180f, 0f);
     }
 }
