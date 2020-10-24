@@ -15,15 +15,25 @@ public class Character : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public HealthBar healthBar;
-    public Transform pfLaserBeam;
+    public Transform pfProjectile;
     private Vector3 projectilePosition;
     public Transform firePoint;
     public string facingDirection = "right";
+    public GameObject healthObject;
+    public List<string> abilities = new List<string> {
+        "laser beam", "fire ball", "healing wave", "electric shock"
+    };
+    public Dictionary<string, string> abilityMap = new Dictionary<string, string> ();
 
     // Start is called before the first frame update
     void Start(){
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+        abilityMap = new Dictionary<string, string> {
+            {"laser beam", "pfLaserBeam" }
+        };
+
+
     }
 
     // Update is called once per frame
@@ -76,13 +86,13 @@ public class Character : MonoBehaviour
         highlight.GetComponent<SpriteRenderer>().enabled = false;
     }
 
-    void TakeDamage(int damage){
+    public void TakeDamage(int damage){
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
     }
 
     void Shoot(){
-        Instantiate(pfLaserBeam, firePoint.position, firePoint.rotation);
+        Instantiate(pfProjectile, firePoint.position, firePoint.rotation);
     }
 
     void Flip(){
@@ -94,5 +104,7 @@ public class Character : MonoBehaviour
         }
 
         transform.Rotate(0f, 180f, 0f);
+        // we rotate hp again to prevent it from being fliped
+        healthObject.transform.Rotate(0f, 180f, 0f);
     }
 }
