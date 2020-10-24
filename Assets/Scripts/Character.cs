@@ -5,8 +5,8 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     [SerializeField]
-    [Range(2,12)]
-    private float speed = 4;
+    [Range(2,50)]
+    private float speed = 20;
 
     private Vector3 targetPosition;
 
@@ -38,10 +38,16 @@ public class Character : MonoBehaviour
     }
 
     void Move(){
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, targetPosition);
+        // transform.rotation = Quaternion.LookRotation(Vector3.forward, targetPosition);
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         if (transform.position == targetPosition){
             isMoving = false;
         }
     }
+
+    // Stopping bounciness on collision
+    void OnCollisionEnter2D(Collision2D col){
+        isMoving = false;
+    }
+
 }

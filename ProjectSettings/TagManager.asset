@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - background
+  - walls
+  - characters
+  - projectiles
+  - foreground
   - 
   - 
   - 
